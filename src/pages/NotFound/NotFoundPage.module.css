@@ -1,0 +1,66 @@
+.pageNotFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 32px;
+  margin-top: 80px;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.image {
+  max-width: 300px;
+  height: auto;
+}
+
+.contextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  margin: 0;
+}
+
+.message {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 26px;
+  color: var(--color-dark-gray);
+}
+
+.homeButton {
+  min-width: 218px;
+  padding: 16px 0;
+  border: none;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition-duration);
+  background-color: var(--color-blue);
+  color: var(--color-light);
+  text-decoration: none;
+}
+
+.homeButton:hover {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+
+@media (max-width: 1023px) {
+  .image {
+    max-width: 120px;
+    height: auto;
+  }
+}
+

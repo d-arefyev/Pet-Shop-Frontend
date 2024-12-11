@@ -1,0 +1,36 @@
+.getDiscountButton {
+  padding: 0 32px;
+  border: none;
+  height: 58px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  transition: var(--transition-duration);
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.getDiscountButton:hover {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+.getDiscountButton:active {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+.addedState {
+  background-color: var(--color-light-gray2);
+  color: var(--color-blue);
+}
+
+.disabled {
+  background-color: var(--color-light-gray);
+  color: var(--color-dark-gray);
+  cursor: not-allowed;
+  opacity: 0.6;
+}

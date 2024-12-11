@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Variables --------------------------------------------------- */
+
+:root {
+  --color-blue: #0D50FF;
+  --color-dark: #282828;
+  --color-light: #FFFFFF;
+  --color-dark-gray: #8B8B8B;
+  --color-light-gray: #DDDDDD;
+  --color-light-gray2: #F1F3F4;
+
+
+  --border-radius-small: 6px;
+  --border-radius-large: 12px;
+  --border: 1px solid var(--color-dark-gray);
+
+  --input-height: 54px;
+
+  --container-width: 1360px;
+  --container-padding-x: 15px;
+
+  --blocks-margin-y: 80px;
+
+  --transition-duration: all 0.2s;
+}
+
+/* CSS Variables for breakpoints ------------------------------- */
+
+:root {
+  --desktop-above: 1281px;
+  --desktop: 1280px;
+  --tablet-above: 1024px;
+  --tablet: 1023px;
+  --mobile-above: 768px;
+  --mobile: 767px;
+  --mobile-s-above: 481px;
+  --mobile-s: 480px;
+}
+
+@media (min-width: 1281px) {}
+@media (max-width: 1280px) {}
+@media (min-width: 1024px) {}
+@media (max-width: 1023px) {}
+@media (min-width: 768px) {}
+@media (max-width: 767px) {}
+@media (min-width: 481px) {}
+@media (max-width: 480px) {}
+
+/* General Layout Styles --------------------------------------- */
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  line-height: 26px;
+  color: var(--color-dark);
+  font-weight: 500;
+  background-image: url('./assets/images/pet-bg-4.jpg');
+  background-repeat: repeat;
+  background-size: 20%;
+  background-position: top left;
+  background-attachment: fixed;
+}
+
+h2 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 70.4px;
+  margin: 0 0 40px 0;
+}
+
+@media (max-width: 1023px) {
+  h2 {
+    font-size: 50px;
+    line-height: 60.4px;
+  }
+}
+
+@media (max-width: 580px) {
+  h2 {
+    font-size: 45px;
+    line-height: 55.4px;
+  }
+}
+
+.globalContainer {
+  max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x);
+}
+
+.wrapperContainer {
+  max-width: 1440px;
+  background-color: var(--color-light);
+  margin-inline: auto;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Loading --------------------------------------- */
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+  position: fixed;
+  top: 21%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--color-blue);
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 -2px,  -14px 0 0 2px,  -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px,  38px 0 0 -2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px,  38px 0 0 2px,  -14px 0 0 -2px,  -38px 0 0 -2px;
+  }
+}
+
+/* Error Message --------------------------------------- */
+
+.errorMessage {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+
+/* a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+} */
+
+
+/* Title h2 and button block -----------------*/
+
+.titleBlock h2 {
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 70.4px;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+}
+
+.titleBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleBlockLine {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-light-gray);
+  margin-left: 32px;
+}
+
+.titleBlockButton {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-dark-gray);
+  background-color: var(--color-light);
+  border: 1px solid var(--color-light-gray);
+  border-radius: var(--border-radius-small);
+  white-space: nowrap;
+  padding: 6px 16px;
+}
+
+.titleBlockButton:hover {
+  color: var(--color-dark-gray);
+  background-color: var(--color-light-gray2);
+}
+
+@media (max-width: 1023px) {
+  .titleBlock h2 {
+    font-size: 50px;
+    line-height: 60.4px;
+  }
+}
+
+@media (max-width: 750px) {
+  .titleBlockLine {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 630px) {
+  .titleBlock h2 {
+    font-size: 45px;
+    line-height: 55.4px;
+  }
+
+  .titleBlockLine {
+    display: none;
+  }
+
+  .titleBlockButton {
+    display: none;
+  }
+}
+
+
+a,
+Link,
+button,
+input,
+textarea,
+svg * {
+  transition: var(--transition-duration);
+}
+
+/* svg * {
+  transition-duration: fill, stroke;
+  transition-duration: var(--transition-duration);
+} */
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button,
+select,
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a {
+  color: var(--color-dark);
+}
+
+a:hover {
+  color: var(--color-blue);
+}
+
+/* Normalise -------------------------------------------------- */
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/**
+    Убираем внутренние отступы слева тегам списков,
+    у которых есть атрибут class
+   */
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+}
+
+/**
+    Убираем внешние отступы body и двум другим тегам,
+    у которых есть атрибут class
+   */
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+/**
+    Убираем внешние отступы вертикали нужным тегам,
+    у которых есть атрибут class
+   */
+:where(h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl):where([class]) {
+  margin-block: 0;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+/**
+    Убираем стандартный маркер маркированному списку,
+    у которого есть атрибут class
+   */
+:where(ul[class]) {
+  list-style: none;
+}
+
+/**
+    Обнуляем вертикальные внешние отступы параграфа,
+    объявляем локальную переменную для внешнего отступа вниз,
+    чтобы избежать взаимодействие с более сложным селектором
+   */
+p {
+  /* --paragraphMarginBottom: 24px; */
+
+  margin-block: 0;
+}
+
+/**
+    Внешний отступ вниз для параграфа без атрибута class,
+    который расположен не последним среди своих соседних элементов
+   */
+p:where(:not([class]):not(:last-child)) {
+  margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+    Упрощаем работу с изображениями
+   */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/**
+    Наследуем свойства шрифт для полей ввода
+   */
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+html {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+  height: 100%;
+}
+
+/**
+    Плавный скролл
+   */
+html,
+:has(:target) {
+  scroll-behavior: smooth;
+}
+
+body {
+  /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+  min-height: 100%;
+  /**
+      Унифицированный интерлиньяж
+     */
+  line-height: 1.5;
+}
+
+/**
+    Приводим к единому цвету svg-элементы
+   */
+svg *[fill] {
+  fill: currentColor
+}
+
+svg *[stroke] {
+  stroke: currentColor
+}
+
+/**
+    Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+   */
+svg * {
+  transition-property: fill, stroke;
+}

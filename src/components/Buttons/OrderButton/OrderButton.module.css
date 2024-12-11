@@ -1,0 +1,40 @@
+.orderButton {
+  padding: 0 32px;
+  border: none;
+  height: 58px;
+  font-weight: 600;
+  text-align: center;
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  transition: var(--transition-duration);
+  background-color: var(--color-blue);
+  color: var(--color-light);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.orderButton:hover {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+.orderButton:active {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+}
+
+.orderedState {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  border: 1px solid var(--color-dark);
+}
+
+.disabled {
+  background-color: var(--color-blue);
+  color: var(--color-light);
+  border: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
