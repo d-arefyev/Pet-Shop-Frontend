@@ -12,6 +12,11 @@ This project is a modern, fully-featured e-commerce web application for a pet pr
 - Axios
 - React Router DOM
 
+## Design Mockups
+
+You can view the Figma design here:  
+[Figma Design Link](https://www.figma.com/design/R5vGrjpf5m65SGortGUpwT/Front-end-React-project-(Copy)-(Copy)?t=XuyJwYDE332uACrm-0)
+
 ## Installation and setup
 
 1. Clone the repository:
