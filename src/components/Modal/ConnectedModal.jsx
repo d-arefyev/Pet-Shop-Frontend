@@ -11,7 +11,7 @@ function ConnectedModal() {
     dispatch(closeModal());
   };
 
-  // Проверяем, что modal.content существует и является массивом
+  // Check that modal.content exists and is an array
   const content = Array.isArray(modal.content) ? modal.content : [];
 
   return (
@@ -22,7 +22,7 @@ function ConnectedModal() {
           <p key={index}>{p}</p>
         ))}
         {/* <div dangerouslySetInnerHTML={{__html: modal.content}}/>  */}
-        {/* опасный способ */}
+        {/* dangerous way */}
       </div>
     </Modal>
   );

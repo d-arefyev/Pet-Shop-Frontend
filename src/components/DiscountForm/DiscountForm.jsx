@@ -9,31 +9,30 @@ import discountImage from '../../assets/images/pets.png';
 import API_URL from '../../utils/api';
 
 function DiscountForm() {
-  // Состояния для хранения значений полей ввода.
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние, чтобы отслеживать, происходит ли отправка формы.
-  const [isSubmitted, setIsSubmitted] = useState(false); // Состояние, чтобы отслеживать, была ли форма отправлена.
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Состояние для отслеживания, было ли поле ввода затронуто (необходимо для отображения подсказок).
+  // State to track if the input field has been touched (needed to display tooltips).
   const [touchedFields, setTouchedFields] = useState({
     name: false,
     phone: false,
     email: false,
   });
 
-  const dispatch = useDispatch(); // Хук для отправки действий в Redux.
+  const dispatch = useDispatch(); // Hook for dispatching actions in Redux.
 
-  // Функция, которая вызывается при отправке формы.
+  // A function that is called when a form is submitted.
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Предотвращаем стандартное поведение формы.
+    event.preventDefault(); // Prevent the standard behavior of the form.
 
-    if (!isFormValid() || isSubmitting) { // Если форма не валидна или уже происходит отправка, прекращаем выполнение функции.
+    if (!isFormValid() || isSubmitting) { // If the form is not valid or is already being sent, we stop executing the function.
       return;
     }
 
-    setIsSubmitting(true); // Устанавливаем состояние отправки формы.
+    setIsSubmitting(true); // Set the form submission state.
 
     try {
       const response = await axios.post(`${API_URL}/sale/send`, {
@@ -42,58 +41,58 @@ function DiscountForm() {
         email,
       });
 
-      if (response.status === 200) { // Если запрос успешен...
-        dispatch(openModal({ // ...открываем модальное окно с сообщением об успехе.
+      if (response.status === 200) { 
+        dispatch(openModal({ 
           title: 'Success',
           content: ['Your request has been submitted successfully!'],
         }));
-        setIsSubmitted(true); // Устанавливаем состояние отправки в true.
-        clearForm(); // Очищаем форму.
+        setIsSubmitted(true); // Set the send state to true.
+        clearForm(); // Clean the form.
       }
     } catch (error) {
-      dispatch(openModal({ // Если запрос не удался, показываем сообщение об ошибке.
+      dispatch(openModal({ 
         title: 'Error',
         content: 'There was an error submitting your request. Please try again later.',
       }));
     } finally {
-      setIsSubmitting(false); // В любом случае, независимо от результата, снимаем состояние отправки формы.
+      setIsSubmitting(false); // In any case, regardless of the result, we remove the form submission state.
     }
   };
 
-  // Функции для проверки валидности каждого поля ввода.
+  // Functions to check the validity of each input field.
   const isNameValid = () => /^[A-Za-z\s]+$/.test(name);
   const isPhoneValid = () => /^\d{10,15}$/.test(phone);
   const isEmailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Функция, которая проверяет валидность всей формы.
+  // A function that checks the validity of the entire form.
   const isFormValid = () => isNameValid() && isPhoneValid() && isEmailValid();
 
-  // Функция для очистки формы и сброса состояния подсказок.
+  // Function to clear the form and reset the state of the hints.
   const clearForm = () => {
-    setName(''); // Очищаем поле "Name".
-    setPhone(''); // Очищаем поле "Phone".
-    setEmail(''); // Очищаем поле "Email".
-    setTouchedFields({ // Сбрасываем состояния подсказок для всех полей.
+    setName(''); // Clearing the field "Name".
+    setPhone(''); // Clearing the field "Phone".
+    setEmail(''); // Clearing the field "Email".
+    setTouchedFields({ // Resetting the hint states for all fields.
       name: false,
       phone: false,
       email: false,
     });
   };
 
-  // Функция для закрытия модального окна и очистки формы.
+  // Function to close the modal window and clear the form.
   const handleCloseModal = () => {
-    dispatch(closeModal()); // Закрываем модальное окно.
-    clearForm(); // Очищаем форму.
+    dispatch(closeModal()); // Close the modal window.
+    clearForm(); // We clean the form.
   };
 
-  // Функция для обработки изменений в полях ввода.
+  // Function for handling changes in input fields.
   const handleInputChange = (field, value) => {
-    // Обновляем значение соответствующего поля.
+    // We update the value of the corresponding field.
     if (field === 'name') setName(value);
-    if (field === 'phone') setPhone(value.replace(/\D/g, '')); // Обрабатываем поле "Phone".
+    if (field === 'phone') setPhone(value.replace(/\D/g, '')); // We process the "Phone" field.
     if (field === 'email') setEmail(value);
 
-    // Отмечаем поле как затронутое, чтобы в дальнейшем отобразить подсказку, если оно невалидно.
+    // We mark the field as affected so that we can display a hint in the future if it is invalid.
     setTouchedFields((prev) => ({
       ...prev,
       [field]: true,
@@ -116,7 +115,7 @@ function DiscountForm() {
                     type="text"
                     value={name}
                     placeholder="Name"
-                    onChange={(e) => handleInputChange('name', e.target.value)} // Обрабатываем изменение поля "Name".
+                    onChange={(e) => handleInputChange('name', e.target.value)}
                     required
                     aria-invalid={!isNameValid()}
                   />
@@ -131,7 +130,7 @@ function DiscountForm() {
                     type="tel"
                     value={phone}
                     placeholder="Phone number"
-                    onChange={(e) => handleInputChange('phone', e.target.value)} // Обрабатываем изменение поля "Phone".
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
                     required
                     aria-invalid={!isPhoneValid()}
                   />
@@ -146,7 +145,7 @@ function DiscountForm() {
                     type="email"
                     value={email}
                     placeholder="Email"
-                    onChange={(e) => handleInputChange('email', e.target.value)} // Обрабатываем изменение поля "Email".
+                    onChange={(e) => handleInputChange('email', e.target.value)}
                     required
                     aria-invalid={!isEmailValid()}
                   />
@@ -156,8 +155,8 @@ function DiscountForm() {
                 </label>
               </div>
               <GetDiscountButton
-                onClick={handleSubmit} // Отправка формы.
-                disabled={!isFormValid() || isSubmitting || isSubmitted} // Блокируем кнопку, если форма невалидна, идет отправка или форма уже отправлена.
+                onClick={handleSubmit}
+                disabled={!isFormValid() || isSubmitting || isSubmitted} // We block the button if the form is invalid, is being sent, or has already been sent.
               />
             </form>
           </div>

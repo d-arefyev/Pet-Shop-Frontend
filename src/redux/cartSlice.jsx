@@ -1,29 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Функция для загрузки корзины из localStorage
+// Function to load cart from localStorage
 const loadCartFromLocalStorage = () => {
   try {
-    const serializedCart = localStorage.getItem("cart");  // Получаем данные корзины из localStorage
+    const serializedCart = localStorage.getItem("cart");  // Getting cart data from localStorage
     if (serializedCart) {
-      return JSON.parse(serializedCart);  // Парсим строку JSON и возвращаем объект
+      return JSON.parse(serializedCart);  // Parse a JSON string and return an object
     }
   } catch (err) {
-    console.error("Failed to load cart from localStorage", err);  // Логируем ошибку, если парсинг или доступ к localStorage не удались
+    console.error("Failed to load cart from localStorage", err);  // Log an error if parsing or access to localStorage fails
   }
-  return { items: [] };  // Возвращаем пустую корзину по умолчанию, если данных нет или произошла ошибка
+  return { items: [] };  // Returns an empty cart by default if there is no data or an error occurs
 };
 
-// Создаем slice для корзины с помощью Redux Toolkit
+// Create a Slice for Cart with Redux Toolkit
 export const cartSlice = createSlice({
-  name: "cart",  // Имя слайса
-  initialState: loadCartFromLocalStorage(),  // Начальное состояние корзины загружается из localStorage
+  name: "cart",  // Slice name
+  initialState: loadCartFromLocalStorage(),  // The initial state of the cart is loaded from localStorage
   reducers: {
-    // Редьюсер для добавления товара в корзину
+    // Reducer for adding product to cart
     addToCart: (state, action) => {
       const { id, title, image, price, discont_price, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
-        existingItem.quantity += quantity;  // Увеличиваем количество, если товар уже есть в корзине
+        existingItem.quantity += quantity;  // Increase quantity if the product is already in the cart
       } else {
         state.items.push({
           id,
@@ -32,55 +32,55 @@ export const cartSlice = createSlice({
           image,
           price,
           discont_price,
-        });  // Добавляем новый товар в корзину
+        });  // Adding a new product to the cart
       }
-      saveCartToLocalStorage(state);  // Сохраняем обновленную корзину в localStorage
+      saveCartToLocalStorage(state);  // Save the updated cart to localStorage
     },
-    // Редьюсер для уменьшения количества товара в корзине
+    // Reducer to reduce the quantity of goods in the basket
     decrementFromCart: (state, action) => {
       const { id } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem.quantity === 1) {
-        state.items = state.items.filter((item) => item.id !== id);  // Удаляем товар из корзины, если его количество равно 1
+        state.items = state.items.filter((item) => item.id !== id);  // Remove the product from the cart if its quantity is 1
       } else {
-        existingItem.quantity--;  // Уменьшаем количество товара на 1
+        existingItem.quantity--;  // Reduce the quantity of goods by 1
       }
-      saveCartToLocalStorage(state);  // Сохраняем обновленную корзину в localStorage
+      saveCartToLocalStorage(state);  // Save the updated cart to localStorage
     },
-    // Редьюсер для обновления количества товара в корзине
+    // Reducer for updating the quantity of goods in the basket
     updateQuantity: (state, action) => {
       const { id, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.id === id);
       if (existingItem) {
-        existingItem.quantity = quantity;  // Обновляем количество товара
+        existingItem.quantity = quantity;  // Updating the quantity of goods
       }
-      saveCartToLocalStorage(state);  // Сохраняем обновленную корзину в localStorage
+      saveCartToLocalStorage(state);  // Save the updated cart to localStorage
     },
-    // Редьюсер для удаления товара из корзины
+    // Reducer for removing items from the cart
     removeItem: (state, action) => {
       const { id } = action.payload;
-      state.items = state.items.filter((item) => item.id !== id);  // Удаляем товар из корзины по id
-      saveCartToLocalStorage(state);  // Сохраняем обновленную корзину в localStorage
+      state.items = state.items.filter((item) => item.id !== id);  // Remove product from cart by id
+      saveCartToLocalStorage(state);  // Save the updated cart to localStorage
     },
-    // Редьюсер для очистки всей корзины
+    // Reducer for cleaning the entire cart
     clearCart: (state) => {
-      state.items = [];  // Очищаем корзину
-      saveCartToLocalStorage(state);  // Сохраняем пустую корзину в localStorage
+      state.items = [];  // Emptying the cart
+      saveCartToLocalStorage(state);  // Save empty cart to localStorage
     },
   },
 });
 
-// Функция для сохранения корзины в localStorage
+// Function to save the cart to localStorage
 const saveCartToLocalStorage = (cartState) => {
   try {
-    const serializedCart = JSON.stringify(cartState);  // Сериализуем состояние корзины в строку JSON
-    localStorage.setItem("cart", serializedCart);  // Сохраняем строку JSON в localStorage
+    const serializedCart = JSON.stringify(cartState);  // Serialize the cart state into a JSON string
+    localStorage.setItem("cart", serializedCart);  // Save a JSON string to localStorage
   } catch (err) {
-    console.error("Failed to save cart to localStorage", err);  // Логируем ошибку, если сохранение не удалось
+    console.error("Failed to save cart to localStorage", err); 
   }
 };
 
-// Экспортируем действия редьюсера
+// Exporting Reducer Actions
 export const {
   addToCart,
   decrementFromCart,

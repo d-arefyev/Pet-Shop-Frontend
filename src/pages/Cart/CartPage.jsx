@@ -14,30 +14,30 @@ function CartPage() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
 
-  // Состояния для полей ввода и состояния формы
+  // States for input fields and form states
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки формы
-  const [isSubmitted, setIsSubmitted] = useState(false); // Состояние успешной отправки
-  const [error, setError] = useState(null); // Состояние для ошибки
+  const [isSubmitting, setIsSubmitting] = useState(false); // Form Submission Status
+  const [isSubmitted, setIsSubmitted] = useState(false); // Successful Send Status
+  const [error, setError] = useState(null); // State for error
 
-  // Состояния для отслеживания, было ли поле затронуто
+  // States to track if a field has been touched
   const [touchedFields, setTouchedFields] = useState({
     name: false,
     phone: false,
     email: false,
   });
 
-  // Очистка формы после успешной отправки
+  // Clearing the form after successful submission
   useEffect(() => {
     if (isSubmitted) {
-      clearForm(); // Очищаем форму
-      setIsSubmitted(false); // Сбрасываем состояние отправки
+      clearForm(); // Cleaning the form
+      setIsSubmitted(false); // Resetting the sending state
     }
   }, [isSubmitted]);
 
-  // Подсчет общего количества товаров и их стоимости
+  // Calculating the total number of goods and their cost
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
   const totalPrice = cartItems.reduce(
     (total, item) => total + (item.discont_price || item.price) * item.quantity,
@@ -45,30 +45,30 @@ function CartPage() {
   );
   const formatPrice = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalPrice);
 
-  // Обработка изменения количества товаров
+  // Processing changes in the quantity of goods
   const handleQuantityChange = (id, newQuantity) => {
     dispatch(updateQuantity({ id, quantity: newQuantity }));
   };
 
-  // Обработка изменений в полях ввода
+  // Handling changes in input fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === 'name') setName(value);
     if (name === 'phone') setPhone(value.replace(/\D/g, ''));
     if (name === 'email') setEmail(value);
 
-    // Отмечаем поле как затронутое
+    // Mark the field as affected
     setTouchedFields((prev) => ({
       ...prev,
       [name]: true,
     }));
   };
 
-  // Отправка формы
+  // Submitting the form
   const handlePlaceOrder = async (e) => {
-    e.preventDefault(); // Предотвращаем стандартное поведение формы
+    e.preventDefault(); // Preventing the default behavior of the form
 
-    // Проверка валидности формы и состояний отправки
+    // Checking form validity and submission states
     if (!isFormValid() || isSubmitting || isSubmitted) return;
 
     const orderData = {
@@ -85,8 +85,8 @@ function CartPage() {
       })),
     };
 
-    setIsSubmitting(true); // Устанавливаем состояние отправки
-    setError(null); // Сбрасываем ошибку
+    setIsSubmitting(true); // Set the sending status
+    setError(null); // Resetting the error
 
     try {
       await axios.post(`${API_URL}/order/send`, orderData, { headers: { 'Content-Type': 'application/json' } });
@@ -97,48 +97,48 @@ function CartPage() {
           'A manager will contact you shortly to confirm your order.'
         ],
       }));
-      setIsSubmitted(true); // Устанавливаем состояние успешной отправки
+      setIsSubmitted(true); // Set the status of successful sending
     } catch (error) {
       console.error('Error placing order', error);
-      setError("An error occurred while placing your order. Please try again later."); // Устанавливаем сообщение об ошибке
+      setError("An error occurred while placing your order. Please try again later.");
     } finally {
-      setIsSubmitting(false); // В любом случае снимаем состояние отправки
+      setIsSubmitting(false); // In any case, we remove the sending state
     }
   };
 
-  // Закрытие модального окна и очистка формы
+  // Closing the modal window and clearing the form
   const handleCloseModal = () => {
     dispatch(closeModal());
-    setIsSubmitted(true); // Очищаем форму
+    setIsSubmitted(true); // Cleaning the form
   };
 
-  // Очистка формы
+  // Cleaning the form
   const clearForm = () => {
-    setName(''); // Очищаем поле "Name"
-    setPhone(''); // Очищаем поле "Phone"
-    setEmail(''); // Очищаем поле "Email"
-    setTouchedFields({ // Сбрасываем состояния подсказок для всех полей
+    setName(''); // Clear the "Name" field
+    setPhone(''); // Clear the "Phone" field
+    setEmail(''); // Clear the "Email" field
+    setTouchedFields({ // Resetting the hint states for all fields
       name: false,
       phone: false,
       email: false,
     });
-    dispatch(clearCart()); // Очищаем корзину
+    dispatch(clearCart()); // Emptying the cart
   };
 
-  // Функции для проверки валидности полей
-  const isNameValid = () => /^[A-Za-z\s]+$/.test(name); // Проверка валидности имени
-  const isPhoneValid = () => /^\d{10,15}$/.test(phone); // Проверка валидности телефона
-  const isEmailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); // Проверка валидности email
+  // Functions for checking field validity
+  const isNameValid = () => /^[A-Za-z\s]+$/.test(name);
+  const isPhoneValid = () => /^\d{10,15}$/.test(phone);
+  const isEmailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  // Проверка валидности всей формы
+  // Checking the validity of the entire form
   const isFormValid = () => isNameValid() && isPhoneValid() && isEmailValid();
 
-  // Отображаем сообщение об ошибке
+  // Displaying an error message
   if (error) return (
     <div className="errorMessage">{error}</div>
   );
 
-  // Проверка на пустую корзину
+  // Check for empty cart
   if (cartItems.length === 0) return (
     <div className="globalContainer">
       <div className={styles.cartPageBlock}>

@@ -75,7 +75,6 @@ const DiscountedProductsPage = () => {
     );
   }
 
-  // Отображаем сообщение об ошибке
   if (error) return (
     <div className="errorMessage">{error}</div>
   );

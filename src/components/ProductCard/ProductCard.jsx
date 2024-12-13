@@ -10,11 +10,11 @@ import API_URL from '../../utils/api';
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
-  // Обработчик добавления товара в корзину
+  // Handler for adding a product to the cart
   const handleAddToCart = (event) => {
-    event.stopPropagation(); // Останавливаем распространение события клика
-    event.preventDefault(); // Дополнительно предотвращаем переход по ссылке
-    dispatch(addToCart({ ...product, quantity: 1 })); // Добавляем товар с количеством 1
+    event.stopPropagation(); // Stopping the propagation of a click event
+    event.preventDefault(); // Additionally, we prevent clicking on the link
+    dispatch(addToCart({ ...product, quantity: 1 })); // Adding a product with a quantity of 1
   };
 
   const calculateDiscountPercentage = (price, discountPrice) => {
